@@ -12,6 +12,12 @@ export default function RootLayout({ children }) {
         <nav>
 <div><Link href="/">Home</Link></div>
                 
+<div><Link href="/createpet">Create Pet</Link></div>
+
+<div><Link href="/viewpets">View Pets</Link></div>
+
+
+
 <div><Link href="/about">About Us</Link></div>
                 
 <div><Link href="/contact">Contact Us</Link></div>

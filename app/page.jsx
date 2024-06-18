@@ -10,7 +10,14 @@ export default async function Page() {
   const pets = await getPets()
 
   return (
+
+
     <div>
+
+      <div>
+        
+      </div>
+
       <h3>List of pets</h3>
       <ul>
         {pets.map((pet, index) => {

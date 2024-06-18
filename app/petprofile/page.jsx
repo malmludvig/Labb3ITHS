@@ -2,19 +2,20 @@
 
 import React from "react";
 
-export default function ProfileView ( params) {
+export default function ProfileView () {
 
+  const history = useHistory();
 
   var stored_datas = JSON.parse(localStorage["datas"]);
 
   //Använd hundnamnet i URL:en för att veta vilken hund som ska visas.
   var str = window.location.href;
-  str = str.substring(str.indexOf("t") + 2); 
- 
+  str = str.substring(str.indexOf("e") + 2);
+
   const petName = window.location.pathname.split('/').filter(segment => segment.trim() !== '').pop();
 
   console.log('Pet name:', petName);
-     
+
   console.log(str);
 
   let dogIdVar,
@@ -23,23 +24,31 @@ export default function ProfileView ( params) {
     ageVar,
     bioVar,
     homeVar,
+    friendListVar,
     imageVar;
     
   for (var i in stored_datas) {
-    if (stored_datas[i].name === petName) {
+    if (stored_datas[i].name === str) {
       dogIdVar = stored_datas[i].dogId;
       nameVar = stored_datas[i].name;
       nickVar = stored_datas[i].nick;
       ageVar = stored_datas[i].age;
       bioVar = stored_datas[i].bio;
       homeVar = stored_datas[i].home.toString();
+      friendListVar = stored_datas[i].friendList;
       imageVar = stored_datas[i].img;
     }
   }
 
+  //Skapar en array med alla nuvarande hunds vänner
+  let friendIds = friendListVar.map((item, index) =>
+    stored_datas.find((x) => x.dogId === item)
+  );
 
-
-
+  //Skapar en array med enbart vännernas ID:n.
+  const friendNames = friendIds.map((item) => {
+    return item.name;
+  });
 
   return (
     <div>
@@ -73,15 +82,22 @@ export default function ProfileView ( params) {
         </tr>
         <br />
         <tr>
-
-
+          <td>Friend list:</td>
+          <td>
+            {friendNames.map((item, index) => (
+              <div key={index}>
+                {item}
+                <br />
+              </div>
+            ))}
+          </td>
         </tr>
       </table>
 
       <a>
         <span
           className="profileLink"
-          
+          onClick={() => history.push(`/editview/${nameVar}`)}
         >
           Edit dog
         </span>
