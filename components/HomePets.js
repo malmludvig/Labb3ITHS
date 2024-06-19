@@ -36,7 +36,7 @@ export const HomeView = () => {
             localStorage.setItem('datas', JSON.stringify(updatedDatas));
             setStoredDatas(updatedDatas);
 
-            // Reload the page (if necessary)
+            // Reload the page (if necessary) 
             // window.location.reload(); // You might not need this line anymore
         }
     };
