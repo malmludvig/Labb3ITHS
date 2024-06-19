@@ -2,7 +2,7 @@
 
 import React, {useState} from 'react'
 
-export default function CreatePet() {
+export default function CreateDog() {
   
     if (localStorage.getItem('datas') === null) 
     {

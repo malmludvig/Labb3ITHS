@@ -15,7 +15,7 @@ export default function ProfileView () {
   const petName = window.location.pathname.split('/').filter(segment => segment.trim() !== '').pop();
 
   console.log('Pet name:', petName);
-
+  
   console.log(str);
 
   let dogIdVar,

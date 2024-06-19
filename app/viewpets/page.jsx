@@ -2,6 +2,8 @@
 
 import React, {useState} from 'react'
 import Link from "next/link"
+import CreateTemplatePets from '../../components/CreateTemplatePets';
+import TemplateLink from '../../components/TemplateLink';
 
 export default function HomeView () {
 
@@ -36,19 +38,17 @@ export default function HomeView () {
         <div>
             
         <h1>Dogs:</h1>
-            
             {stored_datas.map((item, index) => (
                 <div key={index}>
-                    {/* <Link href={"/pet/" + item.name.toLowerCase()}>{item.name}</Link>*/}
+                    { <Link href={"/pet/" + item.name.toLowerCase()}>{item.name}</Link>}
 
-                    <a onClick={() => history.push(`/profile/${item.name}`)} className="profileLink">{item.name}</a>
-                    <a onClick={() => deleteDog(item.dogId, item.name)} className="profileLink"> [delete]</a>
+                    <a onClick={() => deleteDog(item.dogId, item.name)} className="deleteLink"> [delete]</a>
                     <img className="profileImg" src={item.img} alt="" />
                     <br/>
                 </div>
                 ))}
                 <br/>
-                <a></a><span onClick={()=> history.push('/createview')}>Create new dog</span>
+                
         </div>
     )
 }

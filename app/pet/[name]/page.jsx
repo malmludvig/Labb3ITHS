@@ -1,91 +1,89 @@
 "use client"
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-export default function ProfileView ( params) {
+export default function ProfileView(params) {
+  const [petData, setPetData] = useState(null);
 
-
-  var stored_datas = JSON.parse(localStorage["datas"]);
-
-  //Använd hundnamnet i URL:en för att veta vilken hund som ska visas.
-  var str = window.location.href;
-  str = str.substring(str.indexOf("t") + 2); 
- 
-  const petName = window.location.pathname.split('/').filter(segment => segment.trim() !== '').pop();
-
-  console.log('Pet name:', petName);
-     
-  console.log(str);
-
-  let dogIdVar,
-    nameVar,
-    nickVar,
-    ageVar,
-    bioVar,
-    homeVar,
-    imageVar;
+  useEffect(() => {
+    const petName = window.location.pathname.split('/').filter(segment => segment.trim() !== '').pop();
+    console.log('Pet name from URL:', petName);
     
-  for (var i in stored_datas) {
-    if (stored_datas[i].name === petName) {
-      dogIdVar = stored_datas[i].dogId;
-      nameVar = stored_datas[i].name;
-      nickVar = stored_datas[i].nick;
-      ageVar = stored_datas[i].age;
-      bioVar = stored_datas[i].bio;
-      homeVar = stored_datas[i].home.toString();
-      imageVar = stored_datas[i].img;
+    const storedDataString = localStorage.getItem("datas");
+    if (!storedDataString) {
+      console.error("No data found in localStorage.");
+      return;
     }
+
+    let storedDatas;
+    try {
+      storedDatas = JSON.parse(storedDataString);
+      console.log('Parsed data from localStorage:', storedDatas);
+    } catch (error) {
+      console.error("Failed to parse data from localStorage:", error);
+      return;
+    }
+
+    let petInfo = null;
+    for (let i in storedDatas) {
+      if (storedDatas[i].name.toLowerCase() === petName.toLowerCase()) {
+        petInfo = {
+          dogId: storedDatas[i].dogId,
+          name: storedDatas[i].name,
+          nick: storedDatas[i].nick,
+          age: storedDatas[i].age,
+          bio: storedDatas[i].bio,
+          home: storedDatas[i].home.toString(),
+          img: storedDatas[i].img
+        };
+        console.log('Pet info found:', petInfo);
+        break;
+      }
+    }
+
+    if (!petInfo) {
+      console.error("No matching pet info found.");
+    }
+
+    setPetData(petInfo);
+  }, []);
+
+  if (!petData) {
+    return <div>Loading...</div>;
   }
-
-
-
-
 
   return (
     <div>
-      <h1>{nameVar}'s profile</h1>
-      <img className="profileImg" src={imageVar} alt="" />
+      <h1>{petData.name}'s profile</h1>
+      <img className="profileImg" src={petData.img} alt="" />
       <table>
-        <tr></tr>
-        <tr>
-          <td>Id:</td>
-          <td>{dogIdVar}</td>
-        </tr>
-        <tr>
-          <td>Name:</td>
-          <td>{nameVar}</td>
-        </tr>
-        <tr>
-          <td>Nick:</td>
-          <td>{nickVar}</td>
-        </tr>
-        <tr>
-          <td>Age:</td>
-          <td>{ageVar}</td>
-        </tr>
-        <tr>
-          <td>Bio:</td>
-          <td>{bioVar}</td>
-        </tr>
-        <tr>
-          <td>Home:</td>
-          <td>{homeVar}</td>
-        </tr>
-        <br />
-        <tr>
-
-
-        </tr>
+        <tbody>
+          <tr>
+            <td>Id:</td>
+            <td>{petData.dogId}</td>
+          </tr>
+          <tr>
+            <td>Name:</td>
+            <td>{petData.name}</td>
+          </tr>
+          <tr>
+            <td>Nick:</td>
+            <td>{petData.nick}</td>
+          </tr>
+          <tr>
+            <td>Age:</td>
+            <td>{petData.age}</td>
+          </tr>
+          <tr>
+            <td>Bio:</td>
+            <td>{petData.bio}</td>
+          </tr>
+          <tr>
+            <td>Home:</td>
+            <td>{petData.home}</td>
+          </tr>
+        </tbody>
       </table>
-
-      <a>
-        <span
-          className="profileLink"
-          
-        >
-          Edit dog
-        </span>
-      </a>
     </div>
   );
-};
+}

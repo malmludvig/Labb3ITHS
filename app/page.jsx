@@ -1,4 +1,5 @@
 import Link from "next/link"
+import HomeView from "./viewpets/page"
 
 async function getPets() {
   const petsPromise = await fetch("https://learnwebcode.github.io/bootcamp-pet-data/pets.json")
@@ -11,23 +12,10 @@ export default async function Page() {
 
   return (
 
-
-    <div>
-
       <div>
         
-      </div>
+        <HomeView></HomeView>
 
-      <h3>List of pets</h3>
-      <ul>
-        {pets.map((pet, index) => {
-          return (
-            <li key={index}>
-              <Link href={"/pet/" + pet.name.toLowerCase()}>{pet.name}</Link>
-            </li>
-          )
-        })}
-      </ul>
     </div>
   )
 }

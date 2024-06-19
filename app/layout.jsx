@@ -1,5 +1,8 @@
+"use client"
+
 import Link from "next/link"
-import Counter from "../components/Counter"
+import TemplateLink from '../components/TemplateLink';
+
 import "./global.css"
 
 export default function RootLayout({ children }) {
@@ -12,11 +15,9 @@ export default function RootLayout({ children }) {
         <nav>
 <div><Link href="/">Home</Link></div>
                 
-<div><Link href="/createpet">Create Pet</Link></div>
+<div><Link href="/createdog">Create Dog</Link></div>
 
-<div><Link href="/viewpets">View Pets</Link></div>
-
-
+<div><TemplateLink /></div>
 
 <div><Link href="/about">About Us</Link></div>
                 
