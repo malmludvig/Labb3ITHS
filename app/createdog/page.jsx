@@ -10,6 +10,7 @@ export default function CreateDog() {
     const [bio, setBio] = useState("");
     const [url, setUrl] = useState("");
 
+
     useEffect(() => {
         // Om det är första gången besökaren använder dogbook så skapar jag en tom array som sparas i localStorage.
         if (localStorage.getItem('datas') === null) {
@@ -53,6 +54,8 @@ export default function CreateDog() {
         const updatedDatas = [...storedDatas, newObject];
         localStorage.setItem("datas", JSON.stringify(updatedDatas));
         setStoredDatas(updatedDatas);
+        window.location.href = '/';
+
     }
 
     return (
